@@ -39,7 +39,6 @@ class BindC {
                 ?.call(control)
                 ?: error("Cannot find property $propertyName in control!")
         val property = propertyUncasted as Property<Any>
-        println(property.name)
 
         val controllerPropertyUncasted =
             controller::class.memberProperties
@@ -47,7 +46,7 @@ class BindC {
                 ?.call(controller)
                 ?: error("Cannot find property $controllerPropertyName in controller!")
         val controllerProperty = controllerPropertyUncasted as Property<Any>
-        println(controllerProperty.name)
+
         Bindings.bindBidirectional(property, controllerProperty)
     }
 
