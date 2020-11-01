@@ -45,10 +45,10 @@ class BindC {
             controller::class.memberProperties
                 .find { it.name == controllerPropertyName + "Property" }
                 ?.call(controller)
-                ?: error("Cannot find property $propertyName in controller!")
+                ?: error("Cannot find property $controllerPropertyName in controller!")
         val controllerProperty = controllerPropertyUncasted as Property<Any>
         println(controllerProperty.name)
-        Bindings.bindBidirectional(property, controllerProperty);
+        Bindings.bindBidirectional(property, controllerProperty)
     }
 
 }
