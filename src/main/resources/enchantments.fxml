@@ -14,9 +14,11 @@
 
 <?import ru.ought.utils.BindC?>
 
-<GridPane alignment="CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-          minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" vgap="10.0" xmlns="http://javafx.com/javafx/9.0.1"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.ought.controllers.EnchantmentsController">
+<GridPane alignment="CENTER" hgap="10.0" vgap="10.0" prefHeight="480.0" prefWidth="640.0"
+          xmlns="http://javafx.com/javafx/9.0.1"
+          xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="ru.ought.controllers.EnchantmentsController"
+          BindC.controller="$controller">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0"/>
         <ColumnConstraints hgrow="SOMETIMES"/>
@@ -27,77 +29,61 @@
         <RowConstraints vgrow="NEVER"/>
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER"/>
     </rowConstraints>
-    <children>
-        <GridPane alignment="CENTER_LEFT" hgap="10.0" GridPane.columnSpan="2" GridPane.hgrow="NEVER"
-                  GridPane.vgrow="NEVER">
-            <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS"/>
-                <ColumnConstraints hgrow="NEVER"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0"/>
-            </rowConstraints>
-            <children>
-                <TextField promptText="Name" GridPane.hgrow="ALWAYS" fx:id="name"/>
-                <fx:define>
-                    <BindC c="$name" p="text" co="$controller"/>
-                </fx:define>
-                <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1">
-                    <children>
-                        <Label minWidth="-Infinity" text="Cost"/>
-                        <TextField minWidth="-Infinity" prefWidth="40.0"/>
-                        <ComboBox minWidth="-Infinity" promptText="bonus"/>
-                        <Button mnemonicParsing="false" onAction="#onSave" text="Save"/>
-                    </children>
-                    <opaqueInsets>
-                        <Insets/>
-                    </opaqueInsets>
-                </HBox>
-            </children>
-            <GridPane.margin>
-                <Insets/>
-            </GridPane.margin>
-        </GridPane>
-        <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="1">
-            <children>
-                <Label text="Requirement"/>
-                <TextArea prefHeight="60.0"/>
-                <Label text="Summary"/>
-                <TextArea VBox.vgrow="ALWAYS"/>
-            </children>
-        </VBox>
-        <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <children>
-                <Label text="Description"/>
-                <TextArea VBox.vgrow="ALWAYS"/>
-            </children>
-        </VBox>
-        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="2"
-              GridPane.vgrow="NEVER">
-            <children>
-                <Label minWidth="-Infinity" text="Price"/>
-                <TextField minWidth="-Infinity" prefWidth="40.0"/>
-                <ComboBox minWidth="-Infinity" promptText="bonus"/>
-                <Label minWidth="-Infinity" text="Slot"/>
-                <TextField minWidth="-Infinity" prefWidth="40.0"/>
-                <Label minWidth="-Infinity" text="CL"/>
-                <TextField minWidth="-Infinity" prefWidth="40.0"/>
-                <Label minWidth="-Infinity" text="Spells"/>
-                <TextField minWidth="40.0" prefWidth="40.0" HBox.hgrow="ALWAYS"/>
-            </children>
-        </HBox>
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2"
-              GridPane.rowIndex="3">
-            <children>
-                <Label minWidth="-Infinity" text="Feats"/>
-                <TextField minWidth="-Infinity" HBox.hgrow="ALWAYS"/>
-            </children>
-        </HBox>
-    </children>
     <opaqueInsets>
         <Insets/>
     </opaqueInsets>
     <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
     </padding>
+    <GridPane alignment="CENTER_LEFT" hgap="10.0" GridPane.columnSpan="2" GridPane.hgrow="NEVER"
+              GridPane.vgrow="NEVER">
+        <columnConstraints>
+            <ColumnConstraints hgrow="ALWAYS"/>
+            <ColumnConstraints hgrow="NEVER"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0"/>
+        </rowConstraints>
+        <GridPane.margin>
+            <Insets/>
+        </GridPane.margin>
+        <TextField promptText="Name" GridPane.hgrow="ALWAYS" GridPane.columnIndex="0" fx:id="name"
+                   BindC.prop="text"/>
+        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1">
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <Label minWidth="-Infinity" text="Cost"/>
+            <TextField minWidth="-Infinity" prefWidth="40.0"/>
+            <ComboBox minWidth="-Infinity" promptText="bonus"/>
+            <Button mnemonicParsing="false" onAction="#onSave" text="Save"/>
+        </HBox>
+    </GridPane>
+    <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="1">
+        <Label text="Requirement"/>
+        <TextArea prefHeight="60.0"/>
+        <Label text="Summary"/>
+        <TextArea VBox.vgrow="ALWAYS"/>
+    </VBox>
+    <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Label text="Description"/>
+        <TextArea VBox.vgrow="ALWAYS"/>
+    </VBox>
+    <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="2"
+          GridPane.vgrow="NEVER">
+        <Label minWidth="-Infinity" text="Price"/>
+        <TextField minWidth="-Infinity" prefWidth="40.0"/>
+        <ComboBox minWidth="-Infinity" promptText="bonus"/>
+        <Label minWidth="-Infinity" text="Slot"/>
+        <TextField minWidth="-Infinity" prefWidth="40.0"/>
+        <Label minWidth="-Infinity" text="CL"/>
+        <TextField minWidth="-Infinity" prefWidth="40.0"/>
+        <Label minWidth="-Infinity" text="Spells"/>
+        <TextField minWidth="40.0" prefWidth="40.0" HBox.hgrow="ALWAYS"/>
+    </HBox>
+    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2"
+          GridPane.rowIndex="3">
+        <Label minWidth="-Infinity" text="Feats"/>
+        <TextField minWidth="-Infinity" HBox.hgrow="ALWAYS"/>
+    </HBox>
 </GridPane>

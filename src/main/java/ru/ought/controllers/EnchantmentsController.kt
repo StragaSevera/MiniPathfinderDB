@@ -12,7 +12,7 @@ class EnchantmentsController {
     var nameText: String by jfx(nameTextProperty)
 
     @FXML
-    fun onSave(event: ActionEvent) {
+    fun onSave(_event: ActionEvent) {
         println(nameText)
     }
 }

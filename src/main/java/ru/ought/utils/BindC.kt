@@ -2,41 +2,66 @@ package ru.ought.utils
 
 import javafx.beans.binding.Bindings
 import javafx.beans.property.Property
-import javafx.scene.control.Control
+import javafx.scene.Node
+import javafx.scene.Parent
+import java.util.*
 import kotlin.reflect.full.functions
 import kotlin.reflect.full.memberProperties
 
 @Suppress("UNCHECKED_CAST")
-class BindC {
-    // Backing fields
-    var c: Any? = null
-        set(value) {
-            field = value
-            bind()
-        }
-    var p: String? = null
-        set(value) {
-            field = value
-            bind()
-        }
-    var co: Any? = null
-        set(value) {
-            field = value
-            bind()
-        }
-
-    private fun bind() {
-        if (c == null || p == null || co == null) return
-        bind(c as Control, p!!, co!!)
+object BindC {
+    enum class Fields {
+        PROPERTY, CONTROLLER
     }
 
-    private fun bind(control: Control, propertyName: String, controller: Any) {
-        val controllerPropertyName = control.id + propertyName.capitalize()
+    @JvmStatic
+    fun getProp(node: Node): String? = node.properties[Fields.PROPERTY] as String?
+
+    @Suppress("unused")
+    @JvmStatic
+    fun setProp(node: Node, value: String) {
+        node.properties[Fields.PROPERTY] = value
+        println(value)
+    }
+
+    @JvmStatic
+    fun getController(node: Node): Any? = node.properties[Fields.CONTROLLER]
+
+    @Suppress("unused")
+    @JvmStatic
+    fun setController(node: Node, value: Any) {
+        node.properties[Fields.CONTROLLER] = value
+        println(value)
+    }
+
+    fun performBinding(root: Parent) {
+        val controller = getController(root)
+        requireNotNull(controller)
+        getAllChildren(root).filter { node -> getProp(node) != null }
+            .forEach { node -> bind(node, getProp(node)!!, controller) }
+    }
+
+    private fun getAllChildren(root: Parent): List<Node> {
+        tailrec fun getAllChildren1(nodes: MutableList<Node>, acc: MutableList<Node>): MutableList<Node> {
+            if(nodes.isEmpty()) return acc
+            val node = nodes.first()
+            nodes.removeAt(0)
+            acc.add(node)
+            if (node is Parent) {
+                nodes.addAll(node.childrenUnmodifiable)
+            }
+            return getAllChildren1(nodes, acc)
+        }
+        return getAllChildren1(LinkedList<Node>().also { it.add(root) }, mutableListOf())
+    }
+
+    private fun bind(node: Node, propertyName: String, controller: Any) {
+        val controllerPropertyName = node.id + propertyName.capitalize()
 
         val propertyUncasted =
-            control::class.functions
+            node::class.functions
                 .find { it.name == propertyName + "Property" }
-                ?.call(control)
+                ?.call(node)
                 ?: error("Cannot find property $propertyName in control!")
         val property = propertyUncasted as Property<Any>
 
