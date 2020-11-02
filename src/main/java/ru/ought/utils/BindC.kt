@@ -39,18 +39,18 @@ object BindC {
             .forEach { node -> bind(node, getProp(node)!!, controller) }
     }
 
-    private fun getAllChildren(root: Parent): List<Node> {
-        tailrec fun getAllChildren1(nodes: MutableList<Node>, acc: MutableList<Node>): MutableList<Node> {
-            if(nodes.isEmpty()) return acc
+    private fun getAllChildren(root: Parent): Sequence<Node> = sequence {
+        tailrec suspend fun SequenceScope<Node>.getAllChildren1(nodes: MutableList<Node>) {
+            if(nodes.isEmpty()) return
             val node = nodes.first()
             nodes.removeAt(0)
-            acc.add(node)
+            yield(node)
             if (node is Parent) {
                 nodes.addAll(node.childrenUnmodifiable)
             }
-            return getAllChildren1(nodes, acc)
+            getAllChildren1(nodes)
         }
-        return getAllChildren1(LinkedList<Node>().also { it.add(root) }, mutableListOf())
+        getAllChildren1(LinkedList<Node>().also { it.add(root) })
     }
 
     private fun bind(node: Node, propertyName: String, controller: Any) {
