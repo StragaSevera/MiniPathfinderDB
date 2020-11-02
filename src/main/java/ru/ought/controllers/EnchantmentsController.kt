@@ -1,7 +1,6 @@
 package ru.ought.controllers
 
 import javafx.beans.property.SimpleStringProperty
-import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import ru.ought.utils.jfx
 
@@ -12,7 +11,7 @@ class EnchantmentsController {
     var nameText: String by jfx(nameTextProperty)
 
     @FXML
-    fun onSave(_event: ActionEvent) {
+    fun onSave() {
         println(nameText)
     }
 }

@@ -21,7 +21,6 @@ object BindC {
     @JvmStatic
     fun setProp(node: Node, value: String) {
         node.properties[Fields.PROPERTY] = value
-        println(value)
     }
 
     @JvmStatic
@@ -31,7 +30,6 @@ object BindC {
     @JvmStatic
     fun setController(node: Node, value: Any) {
         node.properties[Fields.CONTROLLER] = value
-        println(value)
     }
 
     fun performBinding(root: Parent) {
