@@ -1,11 +1,11 @@
-package ru.ought.controllers
+package ru.ought.viewmodels
 
 import javafx.beans.property.SimpleStringProperty
 import javafx.fxml.FXML
 import ru.ought.utils.jfx
 
 
-class EnchantmentsController {
+class EnchantmentsViewModel {
     @Suppress("MemberVisibilityCanBePrivate")
     val nameTextProperty = SimpleStringProperty("")
     var nameText: String by jfx(nameTextProperty)
