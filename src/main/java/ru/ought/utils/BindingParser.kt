@@ -12,6 +12,9 @@ class BindingParser(data: InputStream) {
         val fxmlData = extractMetadata(dataString)
         val document = DocumentHelper.parseText(fxmlData.xml)
 
+        val rootNode = document.rootElement
+        rootNode.addAttribute("BindC.controller", "\$controller")
+
         val bindingNodes = document.selectNodes("//*[@*='~']")
         for (node in bindingNodes) {
             if (node is Element) {
@@ -48,11 +51,13 @@ class BindingParser(data: InputStream) {
         return FxmlData(xml, metadatas.joinToString("\n"))
     }
 
+    private val bindingMetadata = "<?import ru.ought.utils.BindC?>"
     private fun insertMetadata(xml: String, metadata: String): String {
         val headerEnd = xml.indexOf("?>") + 2
         return buildString {
-            append(xml.substring(0, headerEnd))
-            append(metadata)
+            appendLine(xml.substring(0, headerEnd))
+            appendLine(metadata)
+            appendLine(bindingMetadata)
             append(xml.substring(headerEnd + 1))
         }
     }

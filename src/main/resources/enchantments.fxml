@@ -12,13 +12,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import ru.ought.utils.BindC?>
-
 <GridPane alignment="CENTER" hgap="10.0" vgap="10.0" prefHeight="480.0" prefWidth="640.0"
           xmlns="http://javafx.com/javafx/9.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="ru.ought.viewmodels.EnchantmentsViewModel"
-          BindC.controller="$controller">
+          fx:controller="ru.ought.viewmodels.EnchantmentsViewModel">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0"/>
         <ColumnConstraints hgrow="SOMETIMES"/>
@@ -43,8 +40,6 @@
         </rowConstraints>
         <TextField promptText="Name" GridPane.hgrow="ALWAYS" GridPane.columnIndex="0"
                    fx:id="name" text="~"/>
-        <!--                   BindC.prop="text"-->
-
         <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1">
             <Label minWidth="-Infinity" text="Cost"/>
             <TextField minWidth="-Infinity" prefWidth="40.0"/>
