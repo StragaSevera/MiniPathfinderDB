@@ -4,7 +4,6 @@ import javafx.beans.binding.Bindings
 import javafx.beans.property.Property
 import javafx.scene.Node
 import javafx.scene.Parent
-import java.util.*
 import kotlin.reflect.full.functions
 import kotlin.reflect.full.memberProperties
 
@@ -35,22 +34,8 @@ object BindC {
     fun performBinding(root: Parent) {
         val controller = getController(root)
         requireNotNull(controller)
-        getAllChildren(root).filter { node -> getProp(node) != null }
+        root.getChildrenDeep().filter { node -> getProp(node) != null }
             .forEach { node -> bind(node, getProp(node)!!, controller) }
-    }
-
-    private fun getAllChildren(root: Parent): Sequence<Node> = sequence {
-        tailrec suspend fun SequenceScope<Node>.getAllChildren1(nodes: MutableList<Node>) {
-            if(nodes.isEmpty()) return
-            val node = nodes.first()
-            nodes.removeAt(0)
-            yield(node)
-            if (node is Parent) {
-                nodes.addAll(node.childrenUnmodifiable)
-            }
-            getAllChildren1(nodes)
-        }
-        getAllChildren1(LinkedList<Node>().also { it.add(root) })
     }
 
     private fun bind(node: Node, propertyName: String, controller: Any) {
