@@ -1,19 +1,15 @@
 package ru.ought
 
 import javafx.application.Application
-import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.scene.layout.GridPane
 import javafx.stage.Stage
-import ru.ought.utils.BindC
 import ru.ought.utils.BindingParser
 
 
 class MainApplication : Application() {
     override fun start(primaryStage: Stage) {
-        val processedView = BindingParser("/enchantments.fxml").parse()
-        val root = FXMLLoader().load<GridPane>(processedView.byteInputStream())
-        BindC.performBinding(root)
+        val root = BindingParser("/enchantments.fxml").load<GridPane>()
         val primaryScene = Scene(root)
         with(primaryStage) {
             minWidth = 440.0

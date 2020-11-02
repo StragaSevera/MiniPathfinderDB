@@ -8,7 +8,7 @@ import kotlin.reflect.full.functions
 import kotlin.reflect.full.memberProperties
 
 @Suppress("UNCHECKED_CAST")
-object BindC {
+object BindingManager {
     enum class Fields {
         PROPERTY_NAMES, CONTROLLER
     }

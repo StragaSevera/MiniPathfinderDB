@@ -1,5 +1,7 @@
 package ru.ought.utils
 
+import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
 import org.dom4j.Attribute
 import org.dom4j.DocumentHelper
 import org.dom4j.Element
@@ -9,12 +11,18 @@ class BindingParser(data: InputStream) {
     constructor(resourceName: String): this(BindingParser::class.java.getResourceAsStream(resourceName))
     private val dataString: String = data.reader().readText()
 
-    fun parse(): String {
+    fun <T: Parent> load(): T {
+        val root = FXMLLoader().load<T>(parse().byteInputStream())
+        BindingManager.performBinding(root)
+        return root
+    }
+
+    private fun parse(): String {
         val fxmlData = extractMetadata(dataString)
         val document = DocumentHelper.parseText(fxmlData.xml)
 
         val rootNode = document.rootElement
-        rootNode.addAttribute("BindC.controller", "\$controller")
+        rootNode.addAttribute("BindingManager.controller", "\$controller")
 
         val bindingNodes = document.selectNodes("//*[@*='~']")
         for (node in bindingNodes) {
@@ -22,7 +30,7 @@ class BindingParser(data: InputStream) {
                 val propertiesBinding = node.attributes()
                     .filter { it.value == "~" }
                 node.addAttribute(
-                    "BindC.propertyNames",
+                    "BindingManager.propertyNames",
                     propertiesBinding.joinToString(",", transform = Attribute::getName)
                 )
                 propertiesBinding.forEach { node.remove(it) }
@@ -52,7 +60,7 @@ class BindingParser(data: InputStream) {
         return FxmlData(xml, metadatas.joinToString("\n"))
     }
 
-    private val bindingMetadata = "<?import ru.ought.utils.BindC?>"
+    private val bindingMetadata = "<?import ru.ought.utils.BindingManager?>"
     private fun insertMetadata(xml: String, metadata: String): String {
         val headerEnd = xml.indexOf("?>") + 2
         return buildString {
