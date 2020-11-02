@@ -11,8 +11,7 @@ import ru.ought.utils.BindingParser
 
 class MainApplication : Application() {
     override fun start(primaryStage: Stage) {
-        val view = javaClass.getResourceAsStream("/enchantments.fxml")
-        val processedView = BindingParser(view).parse()
+        val processedView = BindingParser("/enchantments.fxml").parse()
         val root = FXMLLoader().load<GridPane>(processedView.byteInputStream())
         BindC.performBinding(root)
         val primaryScene = Scene(root)

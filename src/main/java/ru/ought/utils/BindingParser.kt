@@ -6,6 +6,7 @@ import org.dom4j.Element
 import java.io.InputStream
 
 class BindingParser(data: InputStream) {
+    constructor(resourceName: String): this(BindingParser::class.java.getResourceAsStream(resourceName))
     private val dataString: String = data.reader().readText()
 
     fun parse(): String {
