@@ -6,11 +6,14 @@ import javafx.scene.Scene
 import javafx.scene.layout.GridPane
 import javafx.stage.Stage
 import ru.ought.utils.BindC
+import ru.ought.utils.BindingParser
 
 
 class MainApplication : Application() {
     override fun start(primaryStage: Stage) {
-        val root = FXMLLoader.load<GridPane>(javaClass.getResource("/enchantments.fxml"))
+        val view = javaClass.getResourceAsStream("/enchantments.fxml")
+        val processedView = BindingParser(view).parse()
+        val root = FXMLLoader().load<GridPane>(processedView.byteInputStream())
         BindC.performBinding(root)
         val primaryScene = Scene(root)
         with(primaryStage) {

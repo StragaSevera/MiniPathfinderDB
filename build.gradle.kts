@@ -17,6 +17,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.10")
+    implementation(group = "org.dom4j", name = "dom4j", version = "2.1.3")
 }
 
 javafx {

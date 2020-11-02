@@ -42,12 +42,14 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0"/>
         </rowConstraints>
         <TextField promptText="Name" GridPane.hgrow="ALWAYS" GridPane.columnIndex="0"
-                   fx:id="name" BindC.prop="text"/>
+                   fx:id="name" text="~"/>
+        <!--                   BindC.prop="text"-->
+
         <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1">
             <Label minWidth="-Infinity" text="Cost"/>
             <TextField minWidth="-Infinity" prefWidth="40.0"/>
             <ComboBox minWidth="-Infinity" promptText="bonus"/>
-            <Button mnemonicParsing="false" onAction="#onSave" text="Save"/>
+            <Button mnemonicParsing="false" onAction="#onSave" text="~~"/>
         </HBox>
     </GridPane>
     <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="1">

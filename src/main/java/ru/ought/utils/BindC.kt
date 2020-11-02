@@ -10,16 +10,16 @@ import kotlin.reflect.full.memberProperties
 @Suppress("UNCHECKED_CAST")
 object BindC {
     enum class Fields {
-        PROPERTY, CONTROLLER
+        PROPERTY_NAMES, CONTROLLER
     }
 
     @JvmStatic
-    fun getProp(node: Node): String? = node.properties[Fields.PROPERTY] as String?
+    fun getPropertyNames(node: Node): String? = node.properties[Fields.PROPERTY_NAMES] as String?
 
     @Suppress("unused")
     @JvmStatic
-    fun setProp(node: Node, value: String) {
-        node.properties[Fields.PROPERTY] = value
+    fun setPropertyNames(node: Node, value: String) {
+        node.properties[Fields.PROPERTY_NAMES] = value
     }
 
     @JvmStatic
@@ -34,28 +34,29 @@ object BindC {
     fun performBinding(root: Parent) {
         val controller = getController(root)
         requireNotNull(controller)
-        root.getChildrenDeep().filter { node -> getProp(node) != null }
-            .forEach { node -> bind(node, getProp(node)!!, controller) }
+        root.getChildrenDeep().filter { node -> getPropertyNames(node) != null }
+            .forEach { node -> bind(node, getPropertyNames(node)!!, controller) }
     }
 
-    private fun bind(node: Node, propertyName: String, controller: Any) {
-        val controllerPropertyName = node.id + propertyName.capitalize()
+    private fun bind(node: Node, propertyNames: String, controller: Any) {
+        propertyNames.split(",").forEach { propertyName ->
+            val controllerPropertyName = node.id + propertyName.capitalize()
 
-        val propertyUncasted =
-            node::class.functions
-                .find { it.name == propertyName + "Property" }
-                ?.call(node)
-                ?: error("Cannot find property $propertyName in control!")
-        val property = propertyUncasted as Property<Any>
+            val propertyUncasted =
+                node::class.functions
+                    .find { it.name == propertyName + "Property" }
+                    ?.call(node)
+                    ?: error("Cannot find property $propertyName in control!")
+            val property = propertyUncasted as Property<Any>
 
-        val controllerPropertyUncasted =
-            controller::class.memberProperties
-                .find { it.name == controllerPropertyName + "Property" }
-                ?.call(controller)
-                ?: error("Cannot find property $controllerPropertyName in controller!")
-        val controllerProperty = controllerPropertyUncasted as Property<Any>
+            val controllerPropertyUncasted =
+                controller::class.memberProperties
+                    .find { it.name == controllerPropertyName + "Property" }
+                    ?.call(controller)
+                    ?: error("Cannot find property $controllerPropertyName in controller!")
+            val controllerProperty = controllerPropertyUncasted as Property<Any>
 
-        Bindings.bindBidirectional(property, controllerProperty)
+            Bindings.bindBidirectional(property, controllerProperty)
+        }
     }
-
 }
