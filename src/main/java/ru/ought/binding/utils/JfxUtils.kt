@@ -1,4 +1,4 @@
-package ru.ought.utils
+package ru.ought.binding.utils
 
 import javafx.scene.Node
 import javafx.scene.Parent

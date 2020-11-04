@@ -1,4 +1,4 @@
-package ru.ought.utils
+package ru.ought.binding.utils
 
 import javafx.beans.property.Property
 import kotlin.reflect.KProperty

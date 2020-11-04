@@ -4,12 +4,12 @@ import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.GridPane
 import javafx.stage.Stage
-import ru.ought.utils.BindingParser
+import ru.ought.binding.BindingLoader
 
 
 class MainApplication : Application() {
     override fun start(primaryStage: Stage) {
-        val root = BindingParser("/enchantments.fxml").load<GridPane>()
+        val root = BindingLoader.from("/enchantments.fxml").load<GridPane>()
         val primaryScene = Scene(root)
         with(primaryStage) {
             minWidth = 440.0
