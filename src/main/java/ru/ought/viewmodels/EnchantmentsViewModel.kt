@@ -6,7 +6,6 @@ import ru.ought.binding.DoubleBinding
 import ru.ought.binding.utils.jfx
 
 
-@Suppress("MemberVisibilityCanBePrivate")
 class EnchantmentsViewModel {
     @DoubleBinding
     val nameTextProperty = SimpleStringProperty("")
