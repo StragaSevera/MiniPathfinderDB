@@ -20,7 +20,16 @@ object BindingManager {
         for ((controllerProperty, annotation) in controllerProperties) {
             val controllerFxProperty = controllerProperty.call(controller) as Property<Any>
             val nodeFxProperty = getNodeFxProperty(annotation, controllerProperty.name, children)
-            Bindings.bindBidirectional(nodeFxProperty, controllerFxProperty)
+            when (annotation.direction) {
+                DoubleBindingDirection.ViewToController -> Bindings.bindBidirectional(
+                    nodeFxProperty,
+                    controllerFxProperty
+                )
+                DoubleBindingDirection.ControllerToView -> Bindings.bindBidirectional(
+                    controllerFxProperty,
+                    nodeFxProperty
+                )
+            }
         }
     }
 
@@ -35,8 +44,22 @@ object BindingManager {
         controllerPropertyName: String,
         children: List<Node>
     ): Property<Any> {
-        val (nodePropertyName, nodeId) = DoubleBinding.parse(annotation, controllerPropertyName)
-        val node = children.find { it.id == nodeId } ?: error("Cannot find a node with id $nodeId")
+        var node: Node? = null
+        var nodePropertyName: String? = null
+        var nodeId: String? = null
+
+        val bindingVariants = DoubleBinding.parse(annotation, controllerPropertyName)
+        for (binding in bindingVariants) {
+            val currentNode = children.find { it.id == binding.id }
+            if (currentNode != null) {
+                node = currentNode
+                nodePropertyName = binding.propertyName
+                nodeId = binding.id
+            }
+        }
+
+        requireNotNull(node) { "Cannot find a node that matches $controllerPropertyName" }
+
         return (node::class.functions
             .find { it.name == nodePropertyName }
             ?.call(node)

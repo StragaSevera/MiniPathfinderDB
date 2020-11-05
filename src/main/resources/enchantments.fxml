@@ -39,15 +39,8 @@
         <TextField fx:id="name" promptText="Name" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" />
         <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1">
             <Label minWidth="-Infinity" text="Cost" />
-            <TextField fx:id="cost" minWidth="-Infinity" prefWidth="40.0" />
-            <ComboBox minWidth="-Infinity" promptText="bonus">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="bonus" />
-                        <String fx:value="gp" />
-                    </FXCollections>
-                </items>
-            </ComboBox>
+            <TextField fx:id="costBuy" minWidth="-Infinity" prefWidth="40.0" />
+            <ComboBox fx:id="costBuyType" minWidth="-Infinity"/>
             <Button mnemonicParsing="false" onAction="#onSave" text="Save" />
         </HBox>
     </GridPane>
