@@ -15,6 +15,7 @@ class BindingLoader(private val data: InputStream) {
         val root = fxmlLoader.load<T>(data)
         val controller = fxmlLoader.getController<Any>()
         BindingManager.performBinding(root, controller)
+        BindingManager.callAfterBinding(controller)
         return root
     }
 }

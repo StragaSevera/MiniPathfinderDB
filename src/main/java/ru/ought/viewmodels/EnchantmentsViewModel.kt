@@ -6,8 +6,9 @@ import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.SingleSelectionModel
-import ru.ought.binding.DoubleBinding
-import ru.ought.binding.DoubleBindingDirection
+import ru.ought.binding.annotations.AfterBinding
+import ru.ought.binding.annotations.DoubleBinding
+import ru.ought.binding.annotations.DoubleBindingDirection
 import ru.ought.binding.utils.jfx
 
 
@@ -31,6 +32,7 @@ class EnchantmentsViewModel {
         get() = costBuyTypeSelectionModel.selectedIndex
         set(value) = costBuyTypeSelectionModel.select(value)
 
+
     @FXML
     private fun initialize() {
         costBuyTypeItems = FXCollections.observableList(listOf("bonus", "gp"))
@@ -40,9 +42,12 @@ class EnchantmentsViewModel {
     fun onSave() {
         println(nameText)
         println(costBuyText)
-//        println(costBuyTypeItems[costBuyTypeIndex])
-//        costBuyTypeIndex = (costBuyTypeIndex + 1).rem(costBuyTypeItems.size)
+        println(costBuyTypeItems[costBuyTypeIndex])
+        costBuyTypeIndex = (costBuyTypeIndex + 1).rem(costBuyTypeItems.size)
     }
 
-    // TODO: Add a way to initialize AFTER bindings are done
+    @AfterBinding
+    fun initializeAfterBinding() {
+        costBuyTypeIndex = 0
+    }
 }

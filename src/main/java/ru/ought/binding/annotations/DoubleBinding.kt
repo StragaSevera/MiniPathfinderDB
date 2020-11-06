@@ -1,4 +1,4 @@
-package ru.ought.binding
+package ru.ought.binding.annotations
 
 
 enum class DoubleBindingDirection {

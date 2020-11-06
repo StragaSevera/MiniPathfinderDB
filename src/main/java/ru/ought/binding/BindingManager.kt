@@ -4,6 +4,9 @@ import javafx.beans.binding.Bindings
 import javafx.beans.property.Property
 import javafx.scene.Node
 import javafx.scene.Parent
+import ru.ought.binding.annotations.AfterBinding
+import ru.ought.binding.annotations.DoubleBinding
+import ru.ought.binding.annotations.DoubleBindingDirection
 import ru.ought.binding.utils.getChildrenDeep
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.functions
@@ -31,6 +34,16 @@ object BindingManager {
                 )
             }
         }
+    }
+
+    fun callAfterBinding(controller: Any?) {
+        requireNotNull(controller)
+
+        val afterBindingMethods =
+            controller::class.functions.filter { method -> method.annotations.any { it is AfterBinding } }
+        check(afterBindingMethods.size <= 1) { "There can be only one AfterBinding method" }
+
+        afterBindingMethods.firstOrNull()?.call(controller)
     }
 
     private fun getControllerProperties(controller: Any) =
