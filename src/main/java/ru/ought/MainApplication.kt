@@ -1,6 +1,7 @@
 package ru.ought
 
 import javafx.application.Application
+import javafx.application.Platform
 import javafx.scene.Scene
 import javafx.scene.layout.GridPane
 import javafx.stage.Stage
@@ -18,5 +19,6 @@ class MainApplication : Application() {
             scene = primaryScene
             show()
         }
+        Platform.runLater { root.requestFocus() }
     }
 }
