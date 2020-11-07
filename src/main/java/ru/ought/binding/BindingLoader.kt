@@ -7,7 +7,6 @@ import java.io.InputStream
 class BindingLoader(private val data: InputStream) {
     companion object {
         fun from(resourceName: String) = BindingLoader(BindingLoader::class.java.getResourceAsStream(resourceName))
-
     }
 
     fun <T : Parent> load(): T {

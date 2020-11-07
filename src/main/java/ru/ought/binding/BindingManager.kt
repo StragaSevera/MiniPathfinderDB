@@ -5,12 +5,11 @@ import javafx.beans.property.Property
 import javafx.scene.Node
 import javafx.scene.Parent
 import ru.ought.binding.annotations.AfterBinding
-import ru.ought.binding.annotations.DoubleBinding
-import ru.ought.binding.annotations.DoubleBindingDirection
 import ru.ought.binding.utils.getChildrenDeep
-import kotlin.reflect.KProperty1
+import ru.ought.fx_properties.DoubleBindingDirection
+import ru.ought.fx_properties.FXDelegatedPropertyManager
+import ru.ought.fx_properties.FXPropertyInfo
 import kotlin.reflect.full.functions
-import kotlin.reflect.full.memberProperties
 
 @Suppress("UNCHECKED_CAST")
 object BindingManager {
@@ -18,12 +17,13 @@ object BindingManager {
         requireNotNull(controller)
 
         val children = root.getChildrenDeep().toList()
-        val controllerProperties = getControllerProperties(controller)
+        val controllerPropertiesInfo = FXDelegatedPropertyManager.getPropertiesFor(controller)
 
-        for ((controllerProperty, annotation) in controllerProperties) {
-            val controllerFxProperty = controllerProperty.call(controller) as Property<Any>
-            val nodeFxProperty = getNodeFxProperty(annotation, controllerProperty.name, children)
-            when (annotation.direction) {
+        for ((propertyName, info) in controllerPropertiesInfo) {
+            val controllerFxProperty = info.fxProperty as Property<Any>
+            val nodeFxProperty = getNodeFxProperty(info, propertyName, children)
+            println(nodeFxProperty.javaClass.name)
+            when (info.direction) {
                 DoubleBindingDirection.ViewToController -> Bindings.bindBidirectional(
                     nodeFxProperty,
                     controllerFxProperty
@@ -46,14 +46,8 @@ object BindingManager {
         afterBindingMethods.firstOrNull()?.call(controller)
     }
 
-    private fun getControllerProperties(controller: Any) =
-        controller::class.memberProperties
-            .map { property -> property to property.annotations.find { it is DoubleBinding } }
-            .filter { (_, annotation) -> annotation != null }
-                as List<Pair<KProperty1<out Any, *>, DoubleBinding>>
-
     private fun getNodeFxProperty(
-        annotation: DoubleBinding,
+        info: FXPropertyInfo<*>,
         controllerPropertyName: String,
         children: List<Node>
     ): Property<Any> {
@@ -61,13 +55,13 @@ object BindingManager {
         var nodePropertyName: String? = null
         var nodeId: String? = null
 
-        val bindingVariants = DoubleBinding.parse(annotation, controllerPropertyName)
+        val bindingVariants = info.parse(controllerPropertyName)
         for (binding in bindingVariants) {
-            val currentNode = children.find { it.id == binding.id }
+            val currentNode = children.find { it.id == binding.targetId }
             if (currentNode != null) {
                 node = currentNode
-                nodePropertyName = binding.propertyName
-                nodeId = binding.id
+                nodePropertyName = binding.targetPropertyName
+                nodeId = binding.targetId
             }
         }
 
