@@ -1,8 +1,14 @@
 package ru.ought.models
 
-enum class CostType { BONUS, GP }
+import kotlinx.serialization.Serializable
 
-data class Enchantment(var name: String, var cost: Int, var costType: CostType, var requirement: String,
-                       var summary: String, var description: String) {
-    constructor(): this("", 0, CostType.BONUS, "", "", "")
-}
+enum class CostType { Bonus, GP }
+
+@Serializable
+data class Enchantment(
+    val name: String, val requirement: String,
+    val summary: String, val description: String,
+    val costBuy: Int, val costCraft: Int, val costType: CostType,
+    val slot: Int, val cl: Int,
+    val spells: String, val feats: String
+)

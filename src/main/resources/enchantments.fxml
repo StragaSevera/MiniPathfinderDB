@@ -40,24 +40,24 @@
         <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1">
             <Label minWidth="-Infinity" text="Cost" />
             <TextField fx:id="costBuy" minWidth="-Infinity" prefWidth="40.0" />
-            <ComboBox fx:id="costBuyType" minWidth="-Infinity"/>
+            <ComboBox fx:id="costBuyType" minWidth="-Infinity" />
             <Button mnemonicParsing="false" onAction="#onSave" text="Save" />
         </HBox>
     </GridPane>
     <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.rowIndex="1">
         <Label text="Requirement" />
-        <TextArea prefHeight="60.0" />
+        <TextArea fx:id="requirement" prefHeight="60.0" />
         <Label text="Summary" />
-        <TextArea VBox.vgrow="ALWAYS" />
+        <TextArea fx:id="summary" VBox.vgrow="ALWAYS" />
     </VBox>
     <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <Label text="Description" />
-        <TextArea VBox.vgrow="ALWAYS" />
+        <TextArea fx:id="description" VBox.vgrow="ALWAYS" />
     </VBox>
     <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.vgrow="NEVER">
         <Label minWidth="-Infinity" text="Price" />
-        <TextField minWidth="-Infinity" prefWidth="40.0" />
-        <ComboBox minWidth="-Infinity" promptText="bonus">
+        <TextField fx:id="costCraft" minWidth="-Infinity" prefWidth="40.0" />
+        <ComboBox fx:id="costCraftType" minWidth="-Infinity">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="bonus" />
@@ -66,14 +66,14 @@
             </items>
         </ComboBox>
         <Label minWidth="-Infinity" text="Slot" />
-        <TextField minWidth="-Infinity" prefWidth="40.0" />
+        <TextField fx:id="slot" minWidth="-Infinity" prefWidth="40.0" />
         <Label minWidth="-Infinity" text="CL" />
-        <TextField minWidth="-Infinity" prefWidth="40.0" />
+        <TextField fx:id="cl" minWidth="-Infinity" prefWidth="40.0" />
         <Label minWidth="-Infinity" text="Spells" />
-        <TextField minWidth="40.0" prefWidth="40.0" HBox.hgrow="ALWAYS" />
+        <TextField fx:id="spells" minWidth="40.0" prefWidth="40.0" HBox.hgrow="ALWAYS" />
     </HBox>
     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
         <Label minWidth="-Infinity" text="Feats" />
-        <TextField minWidth="-Infinity" HBox.hgrow="ALWAYS" />
+        <TextField fx:id="feats" minWidth="-Infinity" HBox.hgrow="ALWAYS" />
     </HBox>
 </GridPane>

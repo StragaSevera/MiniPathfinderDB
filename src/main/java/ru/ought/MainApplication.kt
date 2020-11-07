@@ -5,8 +5,10 @@ import javafx.application.Platform
 import javafx.scene.Scene
 import javafx.scene.layout.GridPane
 import javafx.stage.Stage
+import kotlinx.serialization.json.Json
 import ru.ought.binding.BindingLoader
 
+val jsonEncoder = Json { prettyPrint = true }
 
 class MainApplication : Application() {
     override fun start(primaryStage: Stage) {

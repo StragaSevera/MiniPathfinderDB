@@ -3,6 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     application
     kotlin("jvm") version "1.4.10"
+    kotlin("plugin.serialization") version "1.4.10"
     id("org.openjfx.javafxplugin") version "0.0.9"
     id("com.github.johnrengelman.shadow") version "6.1.0"
 }
@@ -17,6 +18,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.10")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
     implementation(group = "org.dom4j", name = "dom4j", version = "2.1.3")
 }
 
