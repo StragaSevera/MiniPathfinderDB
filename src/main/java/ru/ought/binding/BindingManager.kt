@@ -22,7 +22,6 @@ object BindingManager {
         for ((propertyName, info) in controllerPropertiesInfo) {
             val controllerFxProperty = info.fxProperty as Property<Any>
             val nodeFxProperty = getNodeFxProperty(info, propertyName, children)
-            println(nodeFxProperty.javaClass.name)
             when (info.direction) {
                 DoubleBindingDirection.ViewToController -> Bindings.bindBidirectional(
                     nodeFxProperty,
