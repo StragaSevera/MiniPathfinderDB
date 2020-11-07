@@ -34,9 +34,9 @@ inline fun <reified T> fxDirectional(
     val t = T::class
     val requiredProperty = when {
         t.isSubclassOf(String::class) -> SimpleStringProperty(seed as? String ?: "")
-        t.isSubclassOf(Int::class) -> SimpleIntegerProperty(seed as Int)
-        t.isSubclassOf(Long::class) -> SimpleLongProperty(seed as Long)
-        t.isSubclassOf(Float::class) -> SimpleFloatProperty(seed as Float)
+        t.isSubclassOf(Int::class) -> SimpleIntegerProperty(seed as? Int ?: 0)
+        t.isSubclassOf(Long::class) -> SimpleLongProperty(seed as? Long ?: 0L)
+        t.isSubclassOf(Float::class) -> SimpleFloatProperty(seed as? Float ?: 0.0f)
         else -> if (seed == null) SimpleObjectProperty() else SimpleObjectProperty(seed as T)
     }
     return FXDelegatedPropertyProvider(
