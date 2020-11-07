@@ -1,6 +1,9 @@
 package ru.ought.fx_properties
 
-object FXDelegatedPropertyManager{
+import javafx.beans.property.Property
+import kotlin.reflect.KProperty
+
+object FXDelegatedPropertyManager {
     private val fxProperties: MutableMap<Any, MutableMap<String, FXPropertyInfo<*>>> = mutableMapOf()
     fun registerProperty(controller: Any, propertyName: String, fxPropertyInfo: FXPropertyInfo<*>) {
         val controllerFxProperties = fxProperties.getOrPut(controller) { mutableMapOf() }
@@ -8,4 +11,13 @@ object FXDelegatedPropertyManager{
     }
 
     fun getPropertiesFor(controller: Any): Map<String, FXPropertyInfo<*>> = fxProperties[controller]?.toMap() ?: mapOf()
+
+    @Suppress("UNCHECKED_CAST")
+    fun <T> getFxProperty(controller: Any, kProperty: KProperty<T>) =
+        (getPropertiesFor(controller)[kProperty.name]?.fxProperty as? Property<T>)
+            ?: error("There is no stored property with name ${kProperty.name}")
+
 }
+
+fun <T> getFxProperty(controller: Any, kProperty: KProperty<T>) =
+    FXDelegatedPropertyManager.getFxProperty<T>(controller, kProperty)
