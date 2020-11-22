@@ -7,11 +7,11 @@ import javafx.fxml.FXML
 import javafx.scene.control.SingleSelectionModel
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import ru.ought.binding.annotations.AfterBinding
-import ru.ought.fx_properties.fx
-import ru.ought.fx_properties.fxView
-import ru.ought.fx_properties.getFxProperty
 import ru.ought.jsonEncoder
+import ru.ought.kfx_binding.binding.annotations.AfterBinding
+import ru.ought.kfx_binding.fx_properties.fx
+import ru.ought.kfx_binding.fx_properties.fxView
+import ru.ought.kfx_binding.fx_properties.getFxProperty
 import ru.ought.models.CostType
 import ru.ought.models.Enchantment
 import java.io.File

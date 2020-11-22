@@ -13,12 +13,16 @@ version = "0.0.1"
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs("lib")
+    }
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.4.10")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+    implementation("ru.ought.kfx_binding:kfx_binding:0.1.0")
     implementation(group = "org.dom4j", name = "dom4j", version = "2.1.3")
 }
 

@@ -6,7 +6,7 @@ import javafx.scene.Scene
 import javafx.scene.layout.GridPane
 import javafx.stage.Stage
 import kotlinx.serialization.json.Json
-import ru.ought.binding.BindingLoader
+import ru.ought.kfx_binding.binding.BindingLoader
 
 val jsonEncoder = Json { prettyPrint = true }
 
