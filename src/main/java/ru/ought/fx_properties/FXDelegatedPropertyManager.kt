@@ -20,4 +20,4 @@ object FXDelegatedPropertyManager {
 }
 
 fun <T> getFxProperty(controller: Any, kProperty: KProperty<T>) =
-    FXDelegatedPropertyManager.getFxProperty<T>(controller, kProperty)
+    FXDelegatedPropertyManager.getFxProperty(controller, kProperty)
