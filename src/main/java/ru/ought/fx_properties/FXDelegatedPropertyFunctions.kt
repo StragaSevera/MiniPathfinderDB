@@ -3,25 +3,25 @@ package ru.ought.fx_properties
 import javafx.beans.property.*
 import kotlin.reflect.full.isSubclassOf
 
-fun <T> fx(fxProperty: Property<T>, id: String = "", property: String = ""): FXDelegatedPropertyProvider<T> =
-    fxDirectional(fxProperty, DoubleBindingDirection.ViewToController, id, property)
+fun <T> fx(fxProperty: Property<T>, id: String = "", prop: String = ""): FXDelegatedPropertyProvider<T> =
+    fxDirectional(fxProperty, DoubleBindingDirection.ViewToController, id, prop)
 
-fun <T> fxView(fxProperty: Property<T>, id: String = "", property: String = ""): FXDelegatedPropertyProvider<T> =
-    fxDirectional(fxProperty, DoubleBindingDirection.ControllerToView, id, property)
+fun <T> fxView(fxProperty: Property<T>, id: String = "", prop: String = ""): FXDelegatedPropertyProvider<T> =
+    fxDirectional(fxProperty, DoubleBindingDirection.ControllerToView, id, prop)
 
 fun <T> fxDirectional(
     fxProperty: Property<T>,
     direction: DoubleBindingDirection,
     id: String = "",
-    property: String = ""
+    prop: String = ""
 ): FXDelegatedPropertyProvider<T> =
-    FXDelegatedPropertyProvider(FXPropertyInfo(fxProperty, direction, id, property))
+    FXDelegatedPropertyProvider(FXPropertyInfo(fxProperty, direction, id, prop))
 
-inline fun <reified T> fxView(seed: T? = null, id: String = "", property: String = ""): FXDelegatedPropertyProvider<T> =
-    fxDirectional(DoubleBindingDirection.ControllerToView, seed, id, property)
+inline fun <reified T> fxView(seed: T? = null, id: String = "", prop: String = ""): FXDelegatedPropertyProvider<T> =
+    fxDirectional(DoubleBindingDirection.ControllerToView, seed, id, prop)
 
-inline fun <reified T> fx(seed: T? = null, id: String = "", property: String = ""): FXDelegatedPropertyProvider<T> =
-    fxDirectional(DoubleBindingDirection.ViewToController, seed, id, property)
+inline fun <reified T> fx(seed: T? = null, id: String = "", prop: String = ""): FXDelegatedPropertyProvider<T> =
+    fxDirectional(DoubleBindingDirection.ViewToController, seed, id, prop)
 
 // TODO: Add binding of list and map properties
 @Suppress("UNCHECKED_CAST")
@@ -29,7 +29,7 @@ inline fun <reified T> fxDirectional(
     direction: DoubleBindingDirection,
     seed: T? = null,
     id: String = "",
-    property: String = ""
+    prop: String = ""
 ): FXDelegatedPropertyProvider<T> {
     val t = T::class
     val requiredProperty = when {
@@ -44,7 +44,7 @@ inline fun <reified T> fxDirectional(
             requiredProperty,
             direction,
             id,
-            property
+            prop
         )
     ) as FXDelegatedPropertyProvider<T>
 }

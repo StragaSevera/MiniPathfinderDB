@@ -32,11 +32,12 @@ class EnchantmentsViewModel {
     private val costTypeList = FXCollections.observableArrayList(CostType.values().map { it.name.toLowerCase() })
     private var costBuyTypeItems: ObservableList<String> by fx(costTypeList)
     private var costCraftTypeItems: ObservableList<String> by fx(costTypeList)
-    private var costBuyTypeSelectionModel: SingleSelectionModel<String> by fxView()
+//    private var costBuyTypeSelectionModel: SingleSelectionModel<String> by fxView()
+    private var costBuyTypeModel: SingleSelectionModel<String> by fxView(prop = "selectionModel")
     private var costCraftTypeSelectionModel: SingleSelectionModel<String> by fxView()
     private var costTypeIndex: Int
-        get() = costBuyTypeSelectionModel.selectedIndex
-        set(value) = costBuyTypeSelectionModel.select(value)
+        get() = costBuyTypeModel.selectedIndex
+        set(value) = costBuyTypeModel.select(value)
 
     @AfterBinding
     fun initializeAfterBinding() {
@@ -48,7 +49,7 @@ class EnchantmentsViewModel {
     private fun bindComboBox() {
         Bindings.bindBidirectional(getFxProperty(this, ::costBuyTypeItems), getFxProperty(this, ::costCraftTypeItems))
         Bindings.bindBidirectional(
-            getFxProperty(this, ::costBuyTypeSelectionModel),
+            getFxProperty(this, ::costBuyTypeModel),
             getFxProperty(this, ::costCraftTypeSelectionModel)
         )
     }
