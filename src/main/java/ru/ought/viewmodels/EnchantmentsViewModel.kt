@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
+import javafx.scene.control.Alert
 import javafx.scene.control.SingleSelectionModel
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -75,20 +76,33 @@ class EnchantmentsViewModel {
 
     @FXML
     fun onSave() {
-        val enchantment = Enchantment(
-            name = nameText,
-            requirement = requirementText,
-            summary = summaryText,
-            description = descriptionText,
-            costBuy = costBuyText.toInt(),
-            costCraft = costCraftText.toInt(),
-            costType = CostType.values()[costTypeIndex],
-            slot = slotText.toInt(),
-            cl = clText.toInt(),
-            spells = spellsText,
-            feats = featsText
-        )
+        try {
+            val enchantment = Enchantment(
+                name = nameText,
+                requirement = requirementText,
+                summary = summaryText,
+                description = descriptionText,
+                costBuy = costBuyText.toInt(),
+                costCraft = costCraftText.toInt(),
+                costType = CostType.values()[costTypeIndex],
+                slot = slotText.toInt(),
+                cl = clText.toInt(),
+                spells = spellsText,
+                feats = featsText
+            )
+            File("enchantment.json").writeText(jsonEncoder.encodeToString(enchantment))
 
-        File("enchantment.json").writeText(jsonEncoder.encodeToString(enchantment))
+            Alert(Alert.AlertType.INFORMATION).run {
+                title = "Save successful"
+                contentText = "The data are saved!"
+                show()
+            }
+        } catch (e: Exception) {
+            Alert(Alert.AlertType.ERROR).run {
+                title = "Something went wrong..."
+                contentText = "The data you entered contains something malformed, aborting save."
+                show()
+            }
+        }
     }
 }
